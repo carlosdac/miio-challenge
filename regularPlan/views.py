@@ -21,7 +21,14 @@ class RegularPlanView(ModelViewSet):
 	serializer_class = RegularPlanSerializer
 
 	def get_queryset(self):
-		pass
+		user = is_authenticated(self.request)
+		publish = self.request.query_params.get("publish", None)
+		
+		if publish != None:
+			queryset = RegularPlan.objects.filter(publish=True)
+		else:
+			queryset = RegularPlan.objects.filter(owner=user)
+		return queryset
 
 
 
