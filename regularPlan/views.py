@@ -49,4 +49,12 @@ class RegularPlanView(ModelViewSet):
 		pass
 
 	def update(self, request, pk=None):
-		pass
+		user = is_authenticated(request)
+
+		instance = get_object_or_404(RegularPlan, id=pk)
+
+		serializer = self.serializer_class(instance, data=request.data)
+
+		serializer.is_valid(raise_exception=True)
+		serializer.save()
+		return Response(data=serializer.data, status=status.HTTP_201_CREATED)
