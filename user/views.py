@@ -12,20 +12,22 @@ from .exceptions import NonAuthorized
 # Create your views here.
 
 class UserRegisterView(ModelViewSet):
-  parser_classes = (JSONParser,)
+	parser_classes = (JSONParser,)
 	serializer_class = UserSerializer
 	permission_classes = [AllowAny]
 
 	def create(self, request):
-    serializer = self.serializer_class(data=request.data)
+		serializer = self.serializer_class(data=request.data)
 		
 		status_code = status.HTTP_201_CREATED
 		response_data = {}
-  
-    serializer.is_valid(raise_exception=True)
-		serializer.save()
+	
+		serializer.is_valid(raise_exception=True)
+		new_user = serializer.create()
 
-		return Response(data=serializer.data, status=status_code)
+		new_user_serializer = self.serializer_class(new_user)
+
+		return Response(data=new_user_serializer.data, status=status_code)
 
 class UserLoginView(ModelViewSet):
 	parser_classes = (JSONParser,)
