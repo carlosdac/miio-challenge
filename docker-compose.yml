@@ -1,0 +1,49 @@
+version: "3.4"
+services:
+     postgres:
+          image: postgres
+          environment:
+               POSTGRES_DB: challenges
+               POSTGRES_USER: postgres
+               POSTGRES_PASSWORD: postgres
+          ports:
+               - "5432:5432"
+     
+     mongo:
+          image: mongo
+          environment:
+               MONGO_DB_ROOT_USERNAME: root
+               MONGO_DB_ROOT_PASSWORD: MongoDB2019!
+          ports: 
+               - "27017:27017"
+     redis:
+          image: "redis:alpine"
+          ports:
+               - "6379:6379"
+     celery:
+          build: .
+          command:  sh -c "celery -A miio_challenge worker -l info"
+          depends_on:
+               - postgres
+               - redis
+               - mongo
+          image: app-image
+          restart: on-failure
+
+     web:
+          build: .
+          command: bash -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
+          volumes: 
+               - .:/code
+          ports:
+               - "8000:8000"
+          environment:
+               DJANGO_SECRET_KEY: "&w4g&8=l5#8k-t6u-ocmdm1j@1e@ymtl8d4@wjzhc4wcht9f3-"
+               DJANGO_DEBUG: "True"
+               SENDGRID_API_KEY: "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"
+          depends_on:
+               - postgres
+               - celery
+               - mongo
+               - redis
+          restart: on-failure

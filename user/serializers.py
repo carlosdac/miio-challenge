@@ -19,7 +19,7 @@ class UserSerializer (serializers.ModelSerializer):
       }
     }
 
-  def create(self):
+  def create(self, validated_data=None):
     user = User(
       username=self.validated_data['username'],
       email=self.validated_data['email'],

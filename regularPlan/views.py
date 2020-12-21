@@ -9,8 +9,9 @@ from rest_framework import status
 from .models import RegularPlan
 from user.utils import is_authenticated
 from .serializers import RegularPlanSerializer
+from user.serializers import UserSerializer
 from django.shortcuts import get_object_or_404
-
+from miio_challenge.celery import send_mail
 # Create your views here.
 
 
@@ -19,6 +20,7 @@ class RegularPlanView(ModelViewSet):
 	parser_classes = (JSONParser,)
 	permission_classes = [IsAuthenticatedOrReadOnly]
 	serializer_class = RegularPlanSerializer
+
 
 	def get_queryset(self):
 		user = is_authenticated(self.request)
@@ -32,29 +34,15 @@ class RegularPlanView(ModelViewSet):
 
 
 
-	def create(self, request):
+	def create(self, request, *args, **kwargs):
 		user = is_authenticated(request)
+		response = super(RegularPlanView, self).create(request, *args, **kwargs)
 		
-		regular_plan_data = request.data
-
-		serializer = RegularPlanSerializer(data=regular_plan_data)
-		serializer.is_valid(raise_exception=True)
+		serializer = UserSerializer(user)
+		send_mail.delay(serializer.data)
 		
-		regular_plan_response = serializer.create(serializer.validated_data)		
-		regular_plan_response = RegularPlanSerializer(regular_plan_response)
+		return response
 
-		return Response(data=regular_plan_response.data, status=status.HTTP_201_CREATED)
-
-	def retrieve(self, request, pk=None):
-		pass
-
-	def update(self, request, pk=None):
+	def partial_update(self, request, *args, **kwargs):
 		user = is_authenticated(request)
-
-		instance = get_object_or_404(RegularPlan, id=pk)
-
-		serializer = self.serializer_class(instance, data=request.data)
-
-		serializer.is_valid(raise_exception=True)
-		serializer.save()
-		return Response(data=serializer.data, status=status.HTTP_201_CREATED)
+		return super(RegularPlanView, self).partial_update(request, *args, **kwargs)

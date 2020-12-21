@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class RegularPlanSerializer(serializers.ModelSerializer):
   owner = UserSerializer(many=False, read_only=True)
-  owner_id = serializers.PrimaryKeyRelatedField(many=False, write_only=True, queryset=User.objects.all().values_list('id', flat=True))
+  owner_id = serializers.PrimaryKeyRelatedField(many=False, required=False, write_only=True, queryset=User.objects.all().values_list('id', flat=True))
 
   class Meta:
     model = RegularPlan

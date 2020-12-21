@@ -88,13 +88,21 @@ WSGI_APPLICATION = 'miio_challenge.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': get_env('DJANGO_DB_NAME'),
-        'USER': get_env('DJANGO_DB_USERNAME'),
-        'PASSWORD': get_env('DJANGO_DB_PASSWORD'),
-        'HOST': get_env('DJANGO_DB_HOST'),
-        'PORT': get_env('DJANGO_DB_PORT'),
+        'NAME': get_env('POSTGRES_DB'),
+        'USER': get_env('POSTGRES_USER'),
+        'PASSWORD': get_env('POSTGRES_PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': "5432"
 
-    }
+    },
+    # 'test': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': get_env('DJANGO_DB_NAME_TEST'),
+    #     'USER': get_env('DJANGO_DB_USERNAME'),
+    #     'PASSWORD': get_env('DJANGO_DB_PASSWORD'),
+    #     'HOST': get_env('DJANGO_DB_HOST'),
+    #     'PORT': get_env('DJANGO_DB_PORT'),
+    # }
 }
 
 
@@ -130,7 +138,13 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': timedelta(days=7),
 }
 
+SENDGRID_API_KEY = get_env('SENDGRID_API_KEY')
 
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
