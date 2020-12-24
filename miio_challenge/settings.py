@@ -34,7 +34,7 @@ SECRET_KEY = get_env('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = get_env('DJANGO_DEBUG').lower() == 'true'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -91,18 +91,13 @@ DATABASES = {
         'NAME': get_env('POSTGRES_DB'),
         'USER': get_env('POSTGRES_USER'),
         'PASSWORD': get_env('POSTGRES_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': "5432"
+        'HOST': get_env('POSTGRES_HOST'),
+        'PORT': get_env('POSTGRES_PORT'),
+        'TEST': {
+            'NAME': get_env('POSTGRES_DB') + '_test'
+        }
 
     },
-    # 'test': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': get_env('DJANGO_DB_NAME_TEST'),
-    #     'USER': get_env('DJANGO_DB_USERNAME'),
-    #     'PASSWORD': get_env('DJANGO_DB_PASSWORD'),
-    #     'HOST': get_env('DJANGO_DB_HOST'),
-    #     'PORT': get_env('DJANGO_DB_PORT'),
-    # }
 }
 
 
@@ -137,6 +132,12 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': timedelta(days=7),
 }
+
+MONGODB_URL = get_env('MONGODB_URL')
+MONGODB_DB = get_env('MONGODB_DB')
+MONGODB_USER = get_env('MONGODB_USER')
+MONGODB_PASSWORD = get_env('MONGODB_PASSWORD')
+REDIS_URL = get_env('REDIS_URL')
 
 SENDGRID_API_KEY = get_env('SENDGRID_API_KEY')
 

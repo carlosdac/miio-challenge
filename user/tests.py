@@ -42,7 +42,7 @@ class UserTestCase(TestCase):
       "password": "teste2"
     }
     response  = self.client.post(url, data ,format='json')
-    self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
   def test_login_without_user(self):
     url = reverse('login')
@@ -68,7 +68,7 @@ class UserTestCase(TestCase):
       "password": "testeeew"
     }
     response  = self.client.post(url, data ,format='json')
-    self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
   def test_registration_user_success(self):
     url = reverse('register')

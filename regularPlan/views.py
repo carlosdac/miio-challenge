@@ -11,7 +11,7 @@ from user.utils import is_authenticated
 from .serializers import RegularPlanSerializer
 from user.serializers import UserSerializer
 from django.shortcuts import get_object_or_404
-from miio_challenge.celery import send_mail
+from miio_challenge.celery import send_mail, save_mongodb
 # Create your views here.
 
 
@@ -36,13 +36,15 @@ class RegularPlanView(ModelViewSet):
 
 	def create(self, request, *args, **kwargs):
 		user = is_authenticated(request)
+
+		request.data['owner_id'] = user.id
 		response = super(RegularPlanView, self).create(request, *args, **kwargs)
-		
-		serializer = UserSerializer(user)
-		send_mail.delay(serializer.data)
+
+		save_mongodb.delay(response.data, 'regularPlans')
 		
 		return response
 
 	def partial_update(self, request, *args, **kwargs):
 		user = is_authenticated(request)
+		request.data['owner_id'] = user.id
 		return super(RegularPlanView, self).partial_update(request, *args, **kwargs)

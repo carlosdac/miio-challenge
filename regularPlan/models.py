@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 def validate_bigger_than_zero(value):
   if value <= 0:
     raise ValidationError(
-    _('%(value)s is not bigger than zero'),
+    _('%(value)s is not bigger than zero.'),
     params={'value': value},
     )
 

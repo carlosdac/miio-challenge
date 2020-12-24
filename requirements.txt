@@ -17,6 +17,7 @@ kombu==5.0.2
 prompt-toolkit==3.0.8
 psycopg2==2.8.6
 PyJWT==1.7.1
+pymongo==3.11.2
 python-dotenv==0.15.0
 python-http-client==3.3.1
 pytz==2020.4

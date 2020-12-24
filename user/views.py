@@ -19,24 +19,3 @@ class UserView(ModelViewSet):
 
 	def create(self, request, *args, **kwargs):
 		return super(UserView, self).create(request, *args, **kwargs)
-	
-	@action(methods=["post"], detail=False)
-	def login(self, request):
-		body = request.data
-		username = body.get("username", None)
-		password = body.get("password", None)
-		if username == None or password == None:
-			raise BadRequest("Username or password were not sended.")
-		
-		user = authenticate(username=username, password=password)
-		if user != None:
-			serializer = UserSerializer(user, many=False)
-			token = generate_token_to_user(user)
-			
-			response_data = {}
-			response_data['user'] = serializer.data
-			response_data['token'] = token
-		else:
-			raise NonAuthorized("Username or password are incorrect")
-
-		return Response(data=response_data, status=status.HTTP_200_OK)
