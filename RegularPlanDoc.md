@@ -8,7 +8,7 @@
 | [`/regularplan`](#markdown-header-post-regularplan)                 | `POST`  |     Yes        | Create a new Regular Plan with the user authenticated as owner.                      |
 | [`/regularplan/:pk`](#markdown-header-post-regularplan)             | `PATCH` |     Yes        | Update a Regular Plan with the user authenticated as owner.                      |
 
-Fields of RegularPlan
+RegularPlan Fields
 
 #### id
 - Description: the identifier of the plan
