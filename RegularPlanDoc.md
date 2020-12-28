@@ -251,4 +251,66 @@ List the Regular Plans that has publish = true or that belongs to user authentic
     },
 ```
 
+## POST /regularplan
+### Description
+Create a new Regular Plan with the user authenticated as owner.
 
+### Params
+#### body
+All fields at Regular Plan model, excluded id and owner.
+
+### Response
+| statusCode |  Fields                               | Desciption                                    |
+| :--------- | :-----------------------------------: | --------------------------------------------- |
+| `400`      |     `detail`                          | One or more fields have invalid values.       |
+| `401`      |     `detail`                          | Invalid token or token sent not  in headers.  |
+| `201`      |  `all Regular Plan model fields`      | Regular Plan created.                         |
+| `500`      |     `detail`                          | Server error  .                               |
+
+### Example
+#### Request - POST /regularplan/
+```
+{
+	"name": "My Regular Plan",
+	"subscription": 1,
+	"cycle": 1,
+	"type": 2,
+	"off_peak_price": 0.05,
+	"peak_price": 2.23,
+	"unit": 1,
+	"publish": false,
+	"valid": false,
+	"offer_iva": false,
+	"tar_included": true,
+	"vat": 1,
+	"owner_id": 1
+}
+```
+
+#### Response - 201
+
+```
+{
+  "id": 31,
+  "owner": {
+    "id": 1,
+    "username": "cdac",
+    "first_name": "Carlos",
+    "last_name": "Daniel",
+    "email": "carlosd.1199@gmail.com"
+  },
+  "subscription": 1.0,
+  "off_peak_price": 0.05,
+  "peak_price": 2.23,
+  "name": "My Regular Plan",
+  "tar_included": true,
+  "cycle": 1,
+  "type": 2,
+  "offer_iva": false,
+  "unit": 1,
+  "valid": false,
+  "publish": false,
+  "vat": 1
+}
+
+```
