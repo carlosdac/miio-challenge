@@ -103,7 +103,7 @@ List the Regular Plans that has publish = true or that belongs to user authentic
 ### Response
 | statusCode |  Fields                               | Desciption                                    |
 | :--------- | :-----------------------------------: | --------------------------------------------- |
-| `401`      |     `detail`                          | Invalid token or token not sent in headers.   |
+| `401`      |     `detail`                          | Invalid token or token sent not  in headers.   |
 | `200`      |  `count, next,previous,results`       | List of Regular Plan                          |
 | `500`      |     `detail`                          | Server error  .                               |
   
