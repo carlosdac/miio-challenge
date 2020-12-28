@@ -105,8 +105,8 @@ List the Regular Plans that has publish = true or that belongs to user authentic
 | :--------- | :-----------------------------------: | --------------------------------------------- |
 | `401`      |     `detail`                          | Invalid token or token not sent in headers.   |
 | `200`      |  `count, next,previous,results`       | List of Regular Plan                          |
-| `500`      |     `detail`                          | Error in server.                              |
-
+| `500`      |     `detail`                          | Server error  .                               |
+  
 ### Example
 #### Request - GET /regularplan/?publish=True
 
