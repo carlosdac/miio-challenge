@@ -260,12 +260,12 @@ Create a new Regular Plan with the user authenticated as owner.
 All fields at Regular Plan model, excluded id and owner.
 
 ### Response
-| statusCode |  Fields                               | Desciption                                    |
-| :--------- | :-----------------------------------: | --------------------------------------------- |
-| `400`      |     `detail`                          | One or more fields have invalid values.       |
-| `401`      |     `detail`                          | Invalid token or token sent not  in headers.  |
-| `201`      |  `all Regular Plan model fields`      | Regular Plan created.                         |
-| `500`      |     `detail`                          | Server error  .                               |
+| statusCode |  Fields                               | Desciption                                                      |
+| :--------- | :-----------------------------------: | --------------------------------------------------------------- |
+| `400`      |     `detail`                          | One or more fields have invalid values or publish is True       |
+| `401`      |     `detail`                          | Invalid token or token sent not  in headers.                    |
+| `201`      |  `all Regular Plan model fields`      | Regular Plan created.                                           |
+| `500`      |     `detail`                          | Server error  .                                                 |
 
 ### Example
 #### Request - POST /regularplan/
@@ -302,6 +302,61 @@ All fields at Regular Plan model, excluded id and owner.
   "off_peak_price": 0.05,
   "peak_price": 2.23,
   "name": "My Regular Plan",
+  "tar_included": true,
+  "cycle": 1,
+  "type": 2,
+  "offer_iva": false,
+  "unit": 1,
+  "valid": false,
+  "publish": false,
+  "vat": 1
+}
+
+```
+
+
+
+## PATCH /regularplan/:pk
+### Description
+Update a Regular Plan with the user authenticated as owner.   
+
+### Params
+#### body
+All fields at Regular Plan model, excluded id and owner.
+
+### Response
+| statusCode |  Fields                               | Desciption                                    |
+| :--------- | :-----------------------------------: | --------------------------------------------- |
+| `400`      |     `detail`                          | One or more fields have invalid values.       |
+| `401`      |     `detail`                          | Invalid token or token sent not  in headers.  |
+| `200`      |  `all Regular Plan model fields`      | Regular Plan updated.                         |
+| `500`      |     `detail`                          | Server error  .                               |
+
+### Example
+#### Request - PATCH /regularplan/31/
+```
+{
+	"name": "My Regular Plan Updated",
+	"peak_price": 5.23
+}
+```
+
+#### Response - 201
+
+```
+{
+  "id": 31,
+  "owner": {
+    "id": 1,
+    "username": "cdac",
+    "first_name": "Carlos",
+    "last_name": "Daniel",
+    "email": "carlosd.1199@gmail.com"
+  },
+  "subscription": 1.0,
+  "off_peak_price": 0.05,
+  "peak_price": 5.23,
+  "name": "My Regular Plan Updated",
   "tar_included": true,
   "cycle": 1,
   "type": 2,
