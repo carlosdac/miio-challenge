@@ -282,8 +282,7 @@ All fields at Regular Plan model, excluded id and owner.
 	"valid": false,
 	"offer_iva": false,
 	"tar_included": true,
-	"vat": 1,
-	"owner_id": 1
+	"vat": 1
 }
 ```
 
