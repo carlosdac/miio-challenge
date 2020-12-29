@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
-from dotenv import load_dotenv
+
 
 from datetime import timedelta
 
@@ -23,7 +23,6 @@ get_env = os.environ.get
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -49,6 +48,8 @@ INSTALLED_APPS = [
     'regularPlan',
     'user',
     'rest_framework',
+    'rest_framework_jwt',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -100,7 +101,6 @@ DATABASES = {
     },
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -124,6 +124,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 20
 }
@@ -132,6 +133,7 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_EXPIRATION_DELTA': timedelta(days=7),
 }
+
 
 MONGODB_URL = get_env('MONGODB_URL')
 MONGODB_DB = get_env('MONGODB_DB')

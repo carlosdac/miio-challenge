@@ -1,19 +1,15 @@
-from django.test import TestCase
+import json
 from django.urls import reverse, resolve
 from rest_framework import status
-from rest_framework.test import APIRequestFactory
-from rest_framework.test import APIClient
+from rest_framework.test import APIRequestFactory, APITestCase, APIClient
 ##
 
 from django.contrib.auth.models import User
 
-
-from .utils import generate_token_to_user
-
 import json
 # Create your tests here.
 
-class UserTestCase(TestCase):
+class UserTestCase(APITestCase):
   def setUp(self):
     self.client = APIClient()
     user = User.objects.create(
@@ -42,6 +38,7 @@ class UserTestCase(TestCase):
       "password": "teste2"
     }
     response  = self.client.post(url, data ,format='json')
+    self.assertEqual(json.loads(response.content), {"non_field_errors": ["Unable to log in with provided credentials."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
   def test_login_without_user(self):
@@ -50,6 +47,7 @@ class UserTestCase(TestCase):
       "password": "teste2"
     }
     response  = self.client.post(url, data ,format='json')
+    self.assertEqual(json.loads(response.content), {"username": ["This field is required."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
@@ -59,6 +57,7 @@ class UserTestCase(TestCase):
       "username": "teste2"
     }
     response  = self.client.post(url, data ,format='json')
+    self.assertEqual(json.loads(response.content), {"password": ["This field is required."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
   def test_login_user_with_password_incorrect(self):
@@ -68,6 +67,7 @@ class UserTestCase(TestCase):
       "password": "testeeew"
     }
     response  = self.client.post(url, data ,format='json')
+    self.assertEqual(json.loads(response.content), {"non_field_errors": ["Unable to log in with provided credentials."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
   def test_registration_user_success(self):
@@ -99,6 +99,7 @@ class UserTestCase(TestCase):
     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     response  = self.client.post(url, data ,format='json')
+    self.assertEqual(json.loads(response.content), {"username": ["A user with that username already exists."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     user_count = User.objects.filter(username="chicó").count()
@@ -112,7 +113,8 @@ class UserTestCase(TestCase):
     "password": "ds",
     "email": "mano@gmai.com",
     }
-    response  = self.client.post(url, data ,format='json')
+    response  = self.client.post(url, data ,format='json')    
+    self.assertEqual(json.loads(response.content), {"username": ["This field is required."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
   def test_registration_user_without_email(self):
@@ -120,10 +122,11 @@ class UserTestCase(TestCase):
     data = {
     "first_name": "Carlos",
     "last_name": "Daniel",
-    "username": "chiquinho",
+    "username": "chiquinho234",
     "password": "ds",
     }
     response  = self.client.post(url, data ,format='json')
+    self.assertEqual(json.loads(response.content), {"email": ["This field is required."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
@@ -132,10 +135,11 @@ class UserTestCase(TestCase):
     data = {
     "first_name": "Carlos",
     "last_name": "Daniel",
-    "username": "chiquinho",
+    "username": "chiquinho2345",
     "email": "mano@gmai.com",
     }
     response  = self.client.post(url, data ,format='json')
+    self.assertEqual(json.loads(response.content), {"password": ["This field is required."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
@@ -143,20 +147,22 @@ class UserTestCase(TestCase):
     url = reverse('register')
     data = {
     "last_name": "Daniel",
-    "username": "chiquinho",
+    "username": "chiquinho2345",
     "password": "marcos",
     "email": "mano@gmai.com",
     }
     response  = self.client.post(url, data ,format='json')
+    self.assertEqual(json.loads(response.content), {"first_name": ["This field is required."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
   def test_registration_user_without_last_name(self):
     url = reverse('register')
     data = {
-    "last_name": "Daniel",
-    "username": "chiquinho",
+    "first_name": "Daniel",
+    "username": "chiquinho11212",
     "password": "marcos",
     "email": "mano@gmai.com",
     }
     response  = self.client.post(url, data ,format='json')
+    self.assertEqual(json.loads(response.content), {"last_name": ["This field is required."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

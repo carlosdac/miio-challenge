@@ -1,6 +1,11 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
+
+"""
+This class implements a Serializer from User Django model and overrides a method create from ModelSerializer to
+use method set_password from User model and have not problems with hash.
+"""
 class UserSerializer (serializers.ModelSerializer):
 
   class Meta:
@@ -12,6 +17,13 @@ class UserSerializer (serializers.ModelSerializer):
           'write_only': True
       },
       'email': {
+          'required': True
+      },
+      'first_name': {
+          'required': True
+      },
+      
+      'last_name': {
           'required': True
       },
       'id': {

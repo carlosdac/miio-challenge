@@ -4,7 +4,9 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 # Create your models here.
-
+"""
+This a validator method. Raise ValidationError exception if the value is not bigger than zero.
+"""
 def validate_bigger_than_zero(value):
   if value <= 0:
     raise ValidationError(
@@ -12,7 +14,9 @@ def validate_bigger_than_zero(value):
     params={'value': value},
     )
 
-
+"""
+This a Regular Plan model. Have three enums: Unit, Cycle and Tariff. All fields only required, exclude owner.
+"""
 class RegularPlan(models.Model):
 
   Unit_types = models.IntegerChoices('UnitType', 'kwh min')

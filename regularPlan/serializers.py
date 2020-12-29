@@ -4,10 +4,13 @@ from user.serializers import UserSerializer
 from django.contrib.auth.models import User
 from miio_challenge.celery import send_mail
 
+"""
+This class implements a Serializer from Regular Plan model and overrides an methods create and save from ModelSerializer to
+verify the value from publish in create and send mail in save, if publish is true.
+"""
 class RegularPlanSerializer(serializers.ModelSerializer):
   owner = UserSerializer(many=False, read_only=True)
   owner_id = serializers.PrimaryKeyRelatedField(many=False, required=False, write_only=True, queryset=User.objects.all().values_list('id', flat=True))
-
 
   class Meta:
     model = RegularPlan

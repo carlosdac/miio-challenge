@@ -3,25 +3,25 @@ services:
      postgres:
           image: postgres
           environment:
-               POSTGRES_DB: challenge
-               POSTGRES_USER: postgres
-               POSTGRES_PASSWORD: postgres
+               POSTGRES_DB: ${POSTGRES_DB}
+               POSTGRES_USER: ${POSTGRES_USER}
+               POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
           ports:
-               - "5432:5432"
+               - "${POSTGRES_PORT}:${POSTGRES_PORT}"
      
      mongo:
           image: mongo
           environment:
-               MONGO_INITDB_ROOT_USERNAME: root
-               MONGO_INITDB_ROOT_PASSWORD: MongoDB2019!
-               MONGO_INITDB_DATABASE: challenge
+               MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+               MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+               MONGO_INITDB_DATABASE: ${MONGODB_DB}
           
           ports: 
-               - "27017:27017"
+               - "${MONGODB_PORT}:${MONGODB_PORT}"
      redis:
           image: "redis:alpine"
           ports:
-               - "6379:6379"
+               - "${REDIS_PORT}:${REDIS_PORT}"
      celery:
           build: .
           command:  sh -c "celery -A miio_challenge worker -l info"
@@ -35,11 +35,11 @@ services:
 
      web:
           build: .
-          command: bash -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8080"
+          command: bash -c "python manage.py runserver 0.0.0.0:${DJANGO_PORT}"
           volumes: 
                - .:/code
           ports:
-               - "8080:8080"
+               - "${DJANGO_PORT}:${DJANGO_PORT}"
           depends_on:
                - postgres
                - mongo
