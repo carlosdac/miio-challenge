@@ -4,9 +4,9 @@
 
 | URL                                                                 | Method  | Authentication | Descriiption                                                                         |
 | :------------------------------------------------------------------ | :-----: | :------------: | :----------------------------------------------------------------------------------: |
-| [`/regularplan`](#markdown-header-get-regularplan)                  | `GET`   |     Yes        | List the Regular Plans that has publish = true or that belongs to user authenticated |
-| [`/regularplan`](#markdown-header-post-regularplan)                 | `POST`  |     Yes        | Create a new Regular Plan with the user authenticated as owner.                      |
-| [`/regularplan/:pk`](#markdown-header-post-regularplan)             | `PATCH` |     Yes        | Update a Regular Plan with the user authenticated as owner.                      |
+| [`/`](#markdown-header-get-regularplan)                  | `GET`   |     Yes        | List the Regular Plans that has publish = true or that belongs to user authenticated |
+| [`/`](#markdown-header-post-regularplan)                 | `POST`  |     Yes        | Create a new Regular Plan with the user authenticated as owner.                      |
+| [`/:pk`](#markdown-header-post-regularplan)             | `PATCH` |     Yes        | Update a Regular Plan with the user authenticated as owner.                      |
 
 RegularPlan Fields
 
