@@ -23,6 +23,10 @@ services:
           ports:
                - "${REDIS_PORT}:${REDIS_PORT}"
      celery:
+          environment:
+               REDIS_HOST: ${REDIS_HOST}
+               REDIS_PORT: ${REDIS_PORT}
+               REDIS_DB: ${REDIS_DB}
           build: .
           command:  sh -c "celery -A miio_challenge worker -l info"
           depends_on:
@@ -32,10 +36,12 @@ services:
           image: app-image
           volumes: 
                - .:/code
+          
+          restart: on-failure
 
      web:
           build: .
-          command: bash -c "python manage.py runserver 0.0.0.0:${DJANGO_PORT}"
+          command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:${DJANGO_PORT}"
           volumes: 
                - .:/code
           ports:
