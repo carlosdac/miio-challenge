@@ -23,3 +23,4 @@
 4. Execute the command `docker-machine start your_machine_name` to start the machine created.
 5. Execute the command `docker-compose up --build` to up and build the images.
 6. Done! The project is running.
+7. To run the tests, execute the command `python manage.py test --settings miio_challenge.settings.test`. This is needed cause defines a variable TEST with `true` in `test.py` file.
