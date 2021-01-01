@@ -16,77 +16,77 @@ RegularPlan Fields
 - Required
 
 #### name
-- Description: the name of the plan
+- Description: the name of the Regular plan
 - Type: String
 - Max Length: 100
 - Required
 
 #### tar_included
-- Description: 
+- Description: if the Network Access Tariff is included. 
 - Type: Boolean
 - Required
 
 #### subscription
-- Description: it’s the monthly subscription for the user
+- Description: it’s the monthly subscription for the user.
 - Type: Float
 - Requried
 - Value valid: bigger than zero.
 
 #### cycle
-- Description: The Regular plan tariff cycle
+- Description: the Regular plan's tariff cycle
 - Type: IntegerField
 - choices: 1 - daily ; 2 - weekly
 - Required
 
 #### type
-- Description: The Regular plan tariff type
+- Description: the Regular plan's tariff type
 - Type: IntegerField
 - choices: 1 - bi-time ; 2 - tri-time; 3 - simple
 - Required
 
 
 #### offer_iva
-- Description: boolean true or false
+- Description: if the Regular Plan offer IVA.
 - Type: Boolean
 - Required
 
 #### off_peak_price
-- Description: The Regular Plan price off peak 
+- Description: the Regular Plan's price off peak 
 - Type: float
 - Value valid: bigger than zero.
 - Required
 
 #### peak_price
-- Description: The Regular Plan price peak 
+- Description: the Regular Plan's price peak 
 - Type: float
 - Value valid: bigger than zero.
 - Required
 
 #### unit
-- Description: The Regular Plan unit charge measure
+- Description: the Regular Plan's unit charge measure
 - Type: IntegerField
 - choices: 1 - kwh ; 2 - min
 - Required
 
 #### valid
-- Description: 
+- Description: if the Regular Plan is valid.
 - Type: Boolean
 - Required
 
 #### publish
-- Description: Indicates if a Regular Plan is published
+- Description: if a Regular Plan is published
 - Type: Boolean
 - Required
 
 #### vat
-- Description: 
+- Description: the Regular Plan's Value Added Tax 
 - Type: IntegerField
 - Max Value: 100
 - Min Value: 1
 - Required
 
 #### owner
-- Description: The Regular Plan's owner. Can be null if publish is true or false
+- Description: the Regular Plan's owner. Can be null if publish is true or false
 - Type: User
 - No required
 ---
