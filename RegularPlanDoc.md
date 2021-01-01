@@ -92,13 +92,13 @@ RegularPlan Fields
 ---
 ## GET /regularplan
 ### Description
-List the Regular Plans that has publish = true or that belongs to user authenticated
+List the Regular Plans that are published or that belongs to user authenticated
 
 ### Params
 #### query
 | Field      |               Description                                                 |       Type        | Required |
 | :----:     | :-----------------------------------------------------------------------: | :---------------: | :------: |
-| `publish`  | indicates if the user want list the Regular Plans that has publish = true | boolean           |   No     |
+| `publish`  | indicates if the user want list the Regular Plans that are published | boolean           |   No     |
 
 ### Response
 | statusCode |  Fields                               | Desciption                                    |
