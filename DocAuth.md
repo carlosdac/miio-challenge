@@ -45,7 +45,7 @@ RegularPlan Fields
 ---
 ## POST /login
 ### Description
-Makes login and gives a token to an user.
+Makes login and gives a token to an user. To use the returned token, put in request headers the key `Authorization` and value `JWT your_token`
 
 ### Params
 #### body

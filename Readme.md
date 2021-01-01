@@ -1,3 +1,11 @@
+#Endpoints
+1. `auth/register/`: details in DocAuth.md
+2. `auth/login/`: details in DocAuth.md
+3. `regularplan/`: details in DocRegularPlan.md
+4. `regularplan/:pk`: details in DocRegularPlan.md
+5. `schema/swagger/`: Shows the Swagger documentation version's  
+
+
 # HOW TO
 
 1. Create a new docker machine with command `docker-machine create your_machine_name`,  where `your_machine_name` is the name of machine that will be created.
