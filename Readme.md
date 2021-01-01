@@ -1,4 +1,4 @@
-#Endpoints
+# Endpoints
 1. `auth/register/`: details in DocAuth.md
 2. `auth/login/`: details in DocAuth.md
 3. `regularplan/`: details in DocRegularPlan.md
