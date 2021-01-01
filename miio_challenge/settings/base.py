@@ -18,13 +18,14 @@ from datetime import timedelta
 
 import os
 from dotenv import load_dotenv
-
-load_dotenv()
+from pathlib import Path
+env_path = Path('../..') / '.env'
+load_dotenv(dotenv_path=env_path)
 
 get_env = os.environ.get
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 
@@ -104,6 +105,8 @@ DATABASES = {
 
     },
 }
+
+TEST = False
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

@@ -128,6 +128,19 @@ class UserTestCase(APITestCase):
     response  = self.client.post(url, data ,format='json')
     self.assertEqual(json.loads(response.content), {"email": ["This field is required."]})
     self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+  
+  def test_registration_user_without_email_valid(self):
+    url = reverse('register')
+    data = {
+    "first_name": "Carlos",
+    "last_name": "Daniel",
+    "username": "chiquinho234",
+    "password": "ds",
+    "email": "meuemail",
+    }
+    response  = self.client.post(url, data ,format='json')
+    self.assertEqual(json.loads(response.content), {"email": ["Enter a valid email address."]})
+    self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
   def test_registration_user_without_password(self):

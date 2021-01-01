@@ -27,6 +27,11 @@ services:
                REDIS_HOST: ${REDIS_HOST}
                REDIS_PORT: ${REDIS_PORT}
                REDIS_DB: ${REDIS_DB}
+               MONGODB_HOST: ${MONGODB_HOST}
+               MONGODB_PORT: ${MONGODB_PORT}
+               MONGODB_USER: ${MONGODB_USER}
+               MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+               MONGODB_DB: ${MONGODB_DB}
           build: .
           command:  sh -c "celery -A miio_challenge worker -l info"
           depends_on:

@@ -1,16 +1,19 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse, resolve
 from rest_framework import status
 from rest_framework.test import APIClient,APITestCase
 from .models import RegularPlan
 from unittest.mock import Mock
-from miio_challenge.celery import send_mail, save_mongodb
+import miio_challenge.celery 
 from django.contrib.auth.models import User
 import urllib.parse
 from pymongo import MongoClient 
 from django.conf import settings
 import json
 from .serializers import *
+import os
+
+get_env = os.environ.get
 # Create your tests here.
 
 class RegularPlanCreateTestCase(APITestCase):
@@ -1368,6 +1371,7 @@ class RegularPlanUpdateTestCase(APITestCase):
     self.assertEqual(RegularPlan.objects.filter(id=response_content['id'], vat=response_content['vat']).count(), 1)
     self.assertEqual(json.loads(response.content), response_content)
 
+
 class RegularPlanGetTestCase(APITestCase):
   def setUp(self, *args, **kwargs):
     self.client = APIClient()
@@ -1618,9 +1622,10 @@ class RegularPlanTasksTestCase(APITestCase):
 
 
   def test_send_mail(self):
-    send_mail = Mock()
-    send_mail(self.user)
-    send_mail.assert_called_once_with(self.user)
+
+    miio_challenge.celery = Mock()
+    response = miio_challenge.celery.send_mail(self.user)
+    miio_challenge.celery.send_mail.assert_called_once_with(self.user)
   
   def test_save_mongodb(self):
     url = reverse('register')
@@ -1649,19 +1654,18 @@ class RegularPlanTasksTestCase(APITestCase):
     regular_plan_created = serializer.save()
     regular_plan_created_serializer = RegularPlanSerializer(regular_plan_created)
 
-    username = urllib.parse.quote_plus(settings.MONGODB_USER)
-    password = urllib.parse.quote_plus(settings.MONGODB_PASSWORD)
-    
-    mongo_client = MongoClient(settings.MONGODB_URL % (username, password)) 
-    mongo_database = mongo_client[settings.MONGODB_DB]
+    username = urllib.parse.quote_plus(get_env('MONGODB_USER'))
+    password = urllib.parse.quote_plus(get_env('MONGODB_PASSWORD'))
+
+    mongo_client = MongoClient("mongodb://%s:%s@%s:%s" % (username, password, get_env('MONGODB_HOST'), get_env('MONGODB_PORT'))) 
+    mongo_database = mongo_client[get_env('MONGODB_DB') + '_test']
     collection = mongo_database['regularPlans']
-
-    save_mongodb = Mock()
-    save_mongodb(regular_plan_created_serializer.data, 'regularPlans')
-
+    
+    miio_challenge.celery.save_mongodb(regular_plan_created_serializer.data, 'regularPlans')
+    
     document_saved = collection.find_one({"id": regular_plan_created_serializer.data['id']})
-
-    save_mongodb.assert_called_with(regular_plan_created_serializer.data, 'regularPlans')
     self.assertNotEqual(document_saved, None)
+    mongo_client.drop_database(get_env('MONGODB_DB') + '_test')
+    mongo_client.close()
 
     
