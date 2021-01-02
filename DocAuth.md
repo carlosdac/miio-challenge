@@ -1,13 +1,13 @@
-#  Endpoint Documentation and Regular Plan Model
+#  Endpoint Documentation and User Model
 
 * Base route: `/auth`
 
 | URL                                                                 | Method  | Authentication | Descriiption                                                                         |
 | :------------------------------------------------------------------ | :-----: | :------------: | :----------------------------------------------------------------------------------: |
-| [`/login`](#markdown-header-get-regularplan)                        | `POST`  |     No         | Makes login and gives a token to an user |
-| [`/register`](#markdown-header-post-regularplan)                    | `POST`  |     No         | Create a new user.|
+| [`/login`](#markdown-header-post-user)                        | `POST`  |     No         | Makes login and gives a token to an user |
+| [`/register`](#markdown-header-post-user)                    | `POST`  |     No         | Create a new user.|
 
-RegularPlan Fields
+User Fields
 
 #### id
 - Description: the identifier of user
