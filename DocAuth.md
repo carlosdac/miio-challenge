@@ -4,8 +4,8 @@
 
 | URL                                                                 | Method  | Authentication | Descriiption                                                                         |
 | :------------------------------------------------------------------ | :-----: | :------------: | :----------------------------------------------------------------------------------: |
-| [`/login`](#markdown-header-post-login)                        | `POST`  |     No         | Makes login and gives a token to an user |
-| [`/register`](#markdown-header-post-register)                    | `POST`  |     No         | Create a new user.|
+| [`/login`](#post-login)                        | `POST`  |     No         | Makes login and gives a token to an user |
+| [`/register`](#post-register)                    | `POST`  |     No         | Create a new user.|
 
 User Fields
 
